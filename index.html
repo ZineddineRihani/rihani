@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090914">
+  <meta name="description" content="RIHANI — all my links in one place.">
+  <title>RIHANI — Social Hub</title>
+  <style>
+    :root {
+      --bg:#090914; --panel:rgba(21,21,40,.78); --line:rgba(177,153,255,.18);
+      --text:#f5f3ff; --muted:#aaa6c2; --accent:#a78bfa; --accent2:#60a5fa;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+      background:radial-gradient(ellipse at 15% 5%,rgba(124,58,237,.24),transparent 38%),
+                 radial-gradient(ellipse at 90% 35%,rgba(37,99,235,.16),transparent 35%),var(--bg);
+      display:flex;justify-content:center;padding:38px 16px 28px}
+    .wrap{width:min(100%,680px)}
+    .topline{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+    .live{display:inline-flex;align-items:center;gap:7px}.dot{width:7px;height:7px;border-radius:50%;background:#7cf0bd;box-shadow:0 0 12px #7cf0bd}
+    header{text-align:center;padding:48px 12px 30px}
+    .avatar{width:104px;height:104px;margin:0 auto 18px;border-radius:32px;display:grid;place-items:center;
+      background:linear-gradient(135deg,#8b5cf6,#2563eb);padding:2px;box-shadow:0 12px 45px rgba(124,58,237,.28)}
+    .avatar-inner{width:100%;height:100%;border-radius:30px;background:#111126;display:grid;place-items:center;font-size:31px;font-weight:800;letter-spacing:.04em}
+    h1{margin:0;font-size:clamp(34px,8vw,48px);letter-spacing:.12em;font-weight:850}
+    .subtitle{margin:10px 0 0;color:var(--muted);font-size:14px}
+    .bio{max-width:440px;margin:16px auto 0;color:#d1cde4;font-size:14px;line-height:1.7}
+    .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:20px}
+    .chip{border:1px solid var(--line);background:rgba(255,255,255,.035);padding:7px 11px;border-radius:999px;color:#d9d4f0;font-size:11px}
+    section{margin:20px 0 0}
+    .section-title{display:flex;align-items:center;gap:12px;margin:0 2px 12px;color:#dcd6f3;font-size:12px;font-weight:750;letter-spacing:.16em;text-transform:uppercase}
+    .section-title:after{content:"";height:1px;flex:1;background:linear-gradient(90deg,var(--line),transparent)}
+    .links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    a.link{min-height:66px;display:flex;align-items:center;gap:13px;padding:13px 15px;border:1px solid var(--line);border-radius:17px;
+      color:var(--text);text-decoration:none;background:var(--panel);backdrop-filter:blur(12px);transition:transform .18s,border-color .18s,background .18s}
+    a.link:hover{transform:translateY(-3px);border-color:rgba(167,139,250,.65);background:rgba(44,37,75,.8)}
+    .icon{width:38px;height:38px;flex:0 0 38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(167,139,250,.22),rgba(96,165,250,.15));font-size:16px;font-weight:800}
+    .link strong{display:block;font-size:13px}.link small{display:block;margin-top:4px;color:var(--muted);font-size:11px;overflow-wrap:anywhere}
+    .arrow{margin-left:auto;color:#938bb4;font-size:17px}
+    footer{text-align:center;padding:36px 10px 10px;color:#77728f;font-size:11px}
+    footer b{color:#c9baff;letter-spacing:.12em}
+    @media(max-width:430px){body{padding-top:24px}.links{grid-template-columns:1fr}header{padding-top:38px}.topline{font-size:9px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="topline"><span>PERSONAL SOCIAL HUB</span><span class="live"><i class="dot"></i> ONLINE</span></div>
+    <header>
+      <div class="avatar"><div class="avatar-inner" id="initials">R</div></div>
+      <h1 id="name">RIHANI</h1>
+      <p class="subtitle" id="subtitle">Personal Social Hub</p>
+      <p class="bio" id="bio">All my spaces, profiles and ways to connect — in one place.</p>
+      <div class="chips" id="chips"></div>
+    </header>
+    <div id="sections"></div>
+    <footer>BUILT AROUND <b>RIHANI</b> · ALL LINKS IN ONE PLACE</footer>
+  </main>
+  <script>
+    /*
+      EDIT YOUR PAGE HERE:
+      1) Replace each # with your real profile URL.
+      2) Add or remove links by copying a line in the relevant section.
+      3) To use your own photo, replace avatarText with an image URL and
+         see the optional photo note below.
+    */
+    const profile = {
+      name: "RIHANI",
+      subtitle: "Personal Social Hub",
+      bio: "All my spaces, profiles and ways to connect — in one place.",
+      avatarText: "R",
+      tags: ["SOCIAL", "CREATOR", "ALGERIA"],
+      sections: [
+        { title: "Social networks", links: [
+          { name: "Instagram", handle: "@yourusername", url: "#", icon: "◎" },
+          { name: "Facebook", handle: "Your profile", url: "#", icon: "f" },
+          { name: "X", handle: "@yourusername", url: "#", icon: "𝕏" },
+          { name: "TikTok", handle: "@yourusername", url: "#", icon: "♪" },
+          { name: "Threads", handle: "@yourusername", url: "#", icon: "@" }
+        ]},
+        { title: "Messaging", links: [
+          { name: "Telegram", handle: "@yourusername", url: "#", icon: "➤" },
+          { name: "WhatsApp", handle: "Message me", url: "#", icon: "◉" },
+          { name: "Discord", handle: "Your profile", url: "#", icon: "◈" }
+        ]},
+        { title: "Content & more", links: [
+          { name: "YouTube", handle: "Your channel", url: "#", icon: "▶" },
+          { name: "Twitch", handle: "Your channel", url: "#", icon: "▣" },
+          { name: "Website", handle: "Your website", url: "#", icon: "⌘" }
+        ]}
+      ]
+    };
+
+    document.title = `${profile.name} — Social Hub`;
+    document.getElementById("name").textContent = profile.name;
+    document.getElementById("subtitle").textContent = profile.subtitle;
+    document.getElementById("bio").textContent = profile.bio;
+    document.getElementById("initials").textContent = profile.avatarText;
+    document.getElementById("chips").innerHTML = profile.tags.map(t => `<span class="chip">${escapeHtml(t)}</span>`).join("");
+
+    const root = document.getElementById("sections");
+    profile.sections.forEach(section => {
+      const el = document.createElement("section");
+      const heading = document.createElement("h2");
+      heading.className = "section-title";
+      heading.textContent = section.title;
+      const grid = document.createElement("div");
+      grid.className = "links";
+      section.links.forEach(item => {
+        const a = document.createElement("a");
+        a.className = "link";
+        a.href = item.url;
+        if (item.url === "#") {
+          a.addEventListener("click", e => { e.preventDefault(); alert("Add your real profile URL in the profile.sections section of this file."); });
+        } else {
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+        }
+        const icon = document.createElement("span");
+        icon.className = "icon";
+        icon.textContent = item.icon;
+        const info = document.createElement("span");
+        const strong = document.createElement("strong");
+        strong.textContent = item.name;
+        const small = document.createElement("small");
+        small.textContent = item.handle;
+        info.append(strong, small);
+        const arrow = document.createElement("span");
+        arrow.className = "arrow";
+        arrow.textContent = "↗";
+        a.append(icon, info, arrow);
+        grid.append(a);
+      });
+      el.append(heading, grid);
+      root.append(el);
+    });
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+  </script>
+</body>
+</html>
