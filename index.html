@@ -41,6 +41,11 @@
     footer{text-align:center;padding:36px 10px 10px;color:#77728f;font-size:11px}
     footer b{color:#c9baff;letter-spacing:.12em}
     @media(max-width:430px){body{padding-top:24px}.links{grid-template-columns:1fr}header{padding-top:38px}.topline{font-size:9px}}
+  .avatar-inner {
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
   </style>
 </head>
 <body>
@@ -68,7 +73,7 @@
       name: "Mr ZINEDDINE ✪",
       subtitle: "Made with perfection · Personal Social Hub 🤍",
       bio: "All my profiles and ways to connect... 🔋",
-          avatarImage: <img src="https://raw.githubusercontent.com/ZineddineRihani/rihani/main/profile.png" alt="Profile picture"> ,
+          avatarImage: "https://raw.githubusercontent.com/ZineddineRihani/rihani/main/profile.png" ,
       tags: ["MR RIHANI 👑", "PERSONAL ✖️", "SOCIAL 🌍"],
       sections: [
         { title: "Social networks - مواقع التواصل", links: [
@@ -97,7 +102,16 @@
     document.getElementById("name").textContent = profile.name;
     document.getElementById("subtitle").textContent = profile.subtitle;
     document.getElementById("bio").textContent = profile.bio;
-    document.getElementById("initials").textContent = profile.avatarText;
+    const avatar = document.getElementById("initials");
+
+if (profile.avatarImage) {
+  avatar.textContent = "";
+  avatar.style.backgroundImage = `url("${profile.avatarImage}")`;
+  avatar.style.backgroundSize = "cover";
+  avatar.style.backgroundPosition = "center";
+} else {
+  avatar.textContent = profile.avatarText || "R";
+}
     document.getElementById("chips").innerHTML = profile.tags.map(t => `<span class="chip">${escapeHtml(t)}</span>`).join("");
 
     const root = document.getElementById("sections");
