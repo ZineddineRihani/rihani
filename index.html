@@ -298,7 +298,6 @@
     letter-spacing:1.4px;
   }
 
-  /* Realistic Official Scalloped Verified Badge */
   .verified-badge {
     width:24px;
     height:24px;
@@ -441,8 +440,7 @@
 
   .links .link-card:last-child:nth-child(odd) {
     grid-column:1 / -1;
-    width:calc(50% - 5.5px);
-    justify-self:center;
+    width:100%;
   }
 
   /* GLASS APP CARDS */
@@ -568,7 +566,7 @@
   .modal.show {display:flex}
 
   .modal-box {
-    width:min(100%,360px);
+    width:min(100%,380px);
     padding:25px 22px;
     text-align:center;
     border:1px solid var(--border);
@@ -593,21 +591,29 @@
     margin:0 0 14px;
   }
 
-  /* Stacked sub-account cards inside modal matching reference screenshot */
   .sub-accounts-list {
     display:flex;
     flex-direction:column;
     gap:10px;
     margin:16px 0;
-    max-height:270px;
+    max-height:280px;
     overflow-y:auto;
   }
 
+  .sub-account-row {
+    display:flex;
+    align-items:stretch;
+    gap:7px;
+  }
+
   .sub-account-card {
+    flex:1;
+    min-width:0;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:14px 16px;
+    gap:8px;
+    padding:13px 14px;
     background:var(--card);
     border:1px solid var(--border);
     border-radius:15px;
@@ -625,7 +631,7 @@
 
   .sub-account-card strong {
     display:block;
-    font-size:13px;
+    font-size:12px;
     font-weight:800;
     margin-bottom:3px;
   }
@@ -634,12 +640,32 @@
     display:block;
     color:var(--muted);
     font-size:11px;
+    overflow-wrap:anywhere;
   }
 
   .sub-account-arrow {
-    color:var(--text);
-    font-size:15px;
+    color:var(--accent);
+    font-size:14px;
     font-weight:700;
+    flex-shrink:0;
+  }
+
+  .copy-mini-btn {
+    border:1px solid var(--border);
+    border-radius:15px;
+    background:var(--card);
+    color:var(--text);
+    padding:0 12px;
+    cursor:pointer;
+    font-size:11px;
+    font-weight:800;
+    transition:.2s;
+    flex-shrink:0;
+  }
+
+  .copy-mini-btn:hover {
+    border-color:var(--accent);
+    color:var(--accent);
   }
 
   .qr-image {
@@ -659,6 +685,36 @@
     justify-content:center;
     flex-wrap:wrap;
     margin-top:16px;
+  }
+
+  /* TOAST */
+  #toast {
+    position:fixed;
+    bottom:22px;
+    left:50%;
+    transform:translate(-50%, 16px);
+    z-index:10000;
+    padding:10px 16px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--text);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    box-shadow:var(--shadow);
+    font-size:11px;
+    font-weight:800;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:.25s;
+    white-space:nowrap;
+  }
+
+  #toast.show {
+    opacity:1;
+    visibility:visible;
+    transform:translate(-50%, 0);
   }
 
   /* BACK TO TOP */
@@ -725,7 +781,7 @@
     .dropdown-menu {width:145px}
     header {padding-top:38px}
     .links {gap:9px}
-    .links .link-card:last-child:nth-child(odd) {width:calc(50% - 4.5px)}
+    .links .link-card:last-child:nth-child(odd) {width:100%}
     .link-card {min-height:80px; border-radius:15px}
     .link-main {min-height:78px; padding:10px 32px}
     .icon {width:27px; height:27px; inset-inline-start:5px; border-radius:9px}
@@ -784,7 +840,6 @@
 
       <div class="name-line">
         <h1>ZINEDDINE</h1>
-        <!-- Realistic Scalloped Blue Verified Badge -->
         <span class="verified-badge" title="Verified" aria-label="Verified">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path fill="#1d9bf0" d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34z"/>
@@ -821,13 +876,14 @@
   </div>
 
   <!-- QR MODAL -->
-  <div class="modal" id="qrModal">
+  <div class="modal" id="qrModal" role="dialog" aria-modal="true" aria-labelledby="qrTitle">
     <div class="modal-box">
       <h2 id="qrTitle">My Website QR</h2>
       <p id="qrDescription">Scan this code to visit my website.</p>
       <img class="qr-image" id="qrImage" alt="Website QR Code">
       <p id="qrAddress" style="overflow-wrap:anywhere"></p>
       <div class="modal-buttons">
+        <button class="action-btn" id="copyQrLink" type="button">⧉ Copy Link</button>
         <button class="action-btn" id="downloadQR" type="button">↓ Download QR</button>
         <button class="action-btn" id="closeQR" type="button">✕ Close</button>
       </div>
@@ -835,7 +891,7 @@
   </div>
 
   <!-- MULTI-ACCOUNT MODAL -->
-  <div class="modal" id="multiModal">
+  <div class="modal" id="multiModal" role="dialog" aria-modal="true" aria-labelledby="multiModalTitle">
     <div class="modal-box">
       <h2 id="multiModalTitle">Select Account</h2>
       <p id="multiModalDesc">Select which profile or number you want to open.</p>
@@ -846,6 +902,7 @@
     </div>
   </div>
 
+  <div id="toast" role="status" aria-live="polite"></div>
   <button id="topBtn" type="button" aria-label="Back to top">↑</button>
 
   <script>
@@ -1032,7 +1089,8 @@
       footer:"MADE WITH PRECISION",qrTitle:"My Website QR",
       qrDescription:"Scan this code to visit my website.",
       multiDesc:"Select which option you want to open.",
-      download:"↓ Download QR",close:"✕ Close"
+      download:"↓ Download QR",close:"✕ Close",
+      copy:"Copy",copied:"Copied!",copyLink:"⧉ Copy Link"
     },
     ar:{
       language:"العربية",themeDark:"داكن",themeLight:"فاتح",
@@ -1040,7 +1098,8 @@
       footer:"صُنع بإتقان",qrTitle:"رمز QR لموقعي",
       qrDescription:"امسح الرمز لزيارة موقعي.",
       multiDesc:"اختر الحساب أو الخيار الذي تريد فتحه:",
-      download:"تحميل QR",close:"إغلاق"
+      download:"تحميل QR",close:"إغلاق",
+      copy:"نسخ",copied:"تم النسخ!",copyLink:"⧉ نسخ الرابط"
     },
     es:{
       language:"Español",themeDark:"Oscuro",themeLight:"Claro",
@@ -1048,7 +1107,8 @@
       footer:"HECHO CON PRECISIÓN",qrTitle:"QR de mi sitio",
       qrDescription:"Escanea este código para visitar mi sitio.",
       multiDesc:"Selecciona qué opción deseas abrir.",
-      download:"↓ Descargar QR",close:"✕ Cerrar"
+      download:"↓ Descargar QR",close:"✕ Cerrar",
+      copy:"Copiar",copied:"¡Copiado!",copyLink:"⧉ Copiar enlace"
     },
     fr:{
       language:"Français",themeDark:"Sombre",themeLight:"Clair",
@@ -1056,7 +1116,8 @@
       footer:"FAIT AVEC PRÉCISION",qrTitle:"QR de mon site",
       qrDescription:"Scannez ce code pour visiter mon site.",
       multiDesc:"Sélectionnez l'option à ouvrir.",
-      download:"↓ Télécharger QR",close:"✕ Fermer"
+      download:"↓ Télécharger QR",close:"✕ Fermer",
+      copy:"Copier",copied:"Copié !",copyLink:"⧉ Copier le lien"
     }
   };
 
@@ -1075,6 +1136,9 @@
   const $ = id => document.getElementById(id);
   let language = "en";
   let theme = "dark";
+  let lastFocusedEl = null;
+  let toastTimer = null;
+
   try {
     language = localStorage.getItem("rihani-language") || "en";
     theme = localStorage.getItem("rihani-theme") || "dark";
@@ -1082,6 +1146,24 @@
 
   if (!translations[language]) language = "en";
   if (!["dark","light"].includes(theme)) theme = "dark";
+
+  function showToast(msg) {
+    const el = $("toast");
+    el.textContent = msg;
+    el.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove("show"), 1800);
+  }
+
+  async function copyText(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast(translations[language].copied);
+      return true;
+    } catch(e) {
+      return false;
+    }
+  }
 
   function closeMenus() {
     $("langMenu").classList.remove("open");
@@ -1119,6 +1201,7 @@
     $("footerTop").textContent = t.footer;
     $("qrTitle").textContent = t.qrTitle;
     $("qrDescription").textContent = t.qrDescription;
+    $("copyQrLink").textContent = t.copyLink;
     $("downloadQR").textContent = t.download;
     $("closeQR").textContent = t.close;
     $("closeMultiModal").textContent = t.close;
@@ -1175,11 +1258,11 @@
         if (item.isMulti) {
           a.setAttribute("role", "button");
           a.setAttribute("tabindex", "0");
-          a.addEventListener("click", () => openMultiModal(item));
+          a.addEventListener("click", () => openMultiModal(item, a));
           a.addEventListener("keydown", e => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
-              openMultiModal(item);
+              openMultiModal(item, a);
             }
           });
         } else {
@@ -1195,7 +1278,7 @@
         icon.innerHTML = icons[item.icon] || icons.more;
         let iconColor = item.color;
         if (item.icon === "x") iconColor = theme === "dark" ? "#FFFFFF" : "#111111";
-        if (item.icon === "snapchat") iconColor = "#FFFC00";
+        if (item.icon === "snapchat") iconColor = theme === "dark" ? "#FFFC00" : "#d4a800";
         icon.style.setProperty("--brand", iconColor);
 
         const info = document.createElement("span");
@@ -1214,7 +1297,6 @@
         arrow.textContent = "↗";
 
         a.append(icon, info, arrow);
-
         card.append(a);
         grid.append(card);
       });
@@ -1224,7 +1306,8 @@
     });
   }
 
-  function openMultiModal(item) {
+  function openMultiModal(item, triggerEl) {
+    lastFocusedEl = triggerEl || document.activeElement;
     const t = translations[language];
     $("multiModalTitle").textContent = typeof item.name === "object" ? item.name[language] : item.name;
     $("multiModalDesc").textContent = t.multiDesc;
@@ -1233,6 +1316,9 @@
     list.replaceChildren();
 
     item.accounts.forEach(acc => {
+      const row = document.createElement("div");
+      row.className = "sub-account-row";
+
       const card = document.createElement("a");
       card.className = "sub-account-card";
       card.href = acc.url;
@@ -1256,14 +1342,50 @@
       arr.textContent = "↗";
 
       card.append(info, arr);
-      list.append(card);
+
+      const copyBtn = document.createElement("button");
+      copyBtn.type = "button";
+      copyBtn.className = "copy-mini-btn";
+      copyBtn.textContent = t.copy;
+      copyBtn.addEventListener("click", async e => {
+        e.stopPropagation();
+        await copyText(acc.handle);
+      });
+
+      row.append(card, copyBtn);
+      list.append(row);
     });
 
     $("multiModal").classList.add("show");
+    $("closeMultiModal").focus();
   }
 
-  $("closeMultiModal").addEventListener("click", () => $("multiModal").classList.remove("show"));
-  $("multiModal").addEventListener("click", e => { if(e.target === $("multiModal")) $("multiModal").classList.remove("show"); });
+  function closeMultiModal() {
+    $("multiModal").classList.remove("show");
+    if (lastFocusedEl && typeof lastFocusedEl.focus === "function") {
+      lastFocusedEl.focus();
+      lastFocusedEl = null;
+    }
+  }
+
+  function closeQrModal() {
+    $("qrModal").classList.remove("show");
+    if (lastFocusedEl && typeof lastFocusedEl.focus === "function") {
+      lastFocusedEl.focus();
+      lastFocusedEl = null;
+    }
+  }
+
+  $("closeMultiModal").addEventListener("click", closeMultiModal);
+  $("multiModal").addEventListener("click", e => { if (e.target === $("multiModal")) closeMultiModal(); });
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") {
+      if ($("qrModal").classList.contains("show")) closeQrModal();
+      if ($("multiModal").classList.contains("show")) closeMultiModal();
+      closeMenus();
+    }
+  });
 
   document.querySelectorAll("[data-language]").forEach(btn => {
     btn.addEventListener("click", e => {
@@ -1297,11 +1419,22 @@
   setInterval(updateClock, 1000);
 
   $("shareBtn").addEventListener("click", async () => {
+    const shareData = { title:"Zed's Infos | ZINEDDINE", text:profile.bio[language], url:window.location.href };
     try {
       if (navigator.share) {
-        await navigator.share({ title:"Zed's Infos | ZINEDDINE", text:profile.bio[language], url:window.location.href });
+        await navigator.share(shareData);
+        return;
       }
-    } catch(e) {}
+    } catch(e) {
+      if (e && e.name === "AbortError") return;
+    }
+    const ok = await copyText(window.location.href);
+    if (ok) {
+      const label = $("shareBtn").querySelector("[data-translate='share']");
+      const prev = label.textContent;
+      label.textContent = "✓";
+      setTimeout(() => { label.textContent = prev; }, 1400);
+    }
   });
 
   function createQR() {
@@ -1312,9 +1445,16 @@
     return qrURL;
   }
 
-  $("qrBtn").addEventListener("click", () => { createQR(); $("qrModal").classList.add("show"); });
-  $("closeQR").addEventListener("click", () => $("qrModal").classList.remove("show"));
-  $("qrModal").addEventListener("click", e => { if (e.target === $("qrModal")) $("qrModal").classList.remove("show"); });
+  $("qrBtn").addEventListener("click", () => {
+    lastFocusedEl = $("qrBtn");
+    createQR();
+    $("qrModal").classList.add("show");
+    $("closeQR").focus();
+  });
+
+  $("copyQrLink").addEventListener("click", () => copyText(window.location.href));
+  $("closeQR").addEventListener("click", closeQrModal);
+  $("qrModal").addEventListener("click", e => { if (e.target === $("qrModal")) closeQrModal(); });
 
   $("downloadQR").addEventListener("click", async () => {
     const url = createQR();
@@ -1339,8 +1479,11 @@
   $("topBtn").addEventListener("click", () => window.scrollTo({top:0, behavior:"smooth"}));
 
   render();
-  window.addEventListener("load", () => setTimeout(() => $("loader").classList.add("hide"), 650));
-  setTimeout(() => $("loader").classList.add("hide"), 2000);
+  const loaderFallback = setTimeout(() => $("loader").classList.add("hide"), 2000);
+  window.addEventListener("load", () => {
+    clearTimeout(loaderFallback);
+    setTimeout(() => $("loader").classList.add("hide"), 650);
+  });
   </script>
 </body>
 </html>
